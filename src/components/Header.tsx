@@ -85,10 +85,10 @@ export function Header() {
               {siteConfig.phone}
             </a>
             <a
-              href="#contact"
+              href="#consultation"
               className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
             >
-              Вызвать мастера
+              Оставить заявку
             </a>
           </div>
 
@@ -159,11 +159,11 @@ export function Header() {
                   {siteConfig.phone}
                 </a>
                 <a
-                  href="#contact"
+                  href="#consultation"
                   className="text-center py-2 bg-blue-600 text-white rounded-lg font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Вызвать мастера
+                  Оставить заявку
                 </a>
               </div>
             </nav>

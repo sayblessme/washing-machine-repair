@@ -6,6 +6,8 @@ import { reviewsData } from "@/data/reviews";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { ReviewCard } from "@/components/ReviewCard";
 
+const basePath = "/washing-master";
+
 export default function HomePage() {
   return (
     <>
@@ -19,7 +21,7 @@ export default function HomePage() {
               Ремонт стиральной машины на дому — приеду в течение 2 часов
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8">
-              Оставьте заявку — перезвоню в течение 5 минут и скажу когда смогу приехать
+              Оставьте заявку — перезвоню в течение 5 минут
             </p>
 
             <ul className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-10 text-gray-700">
@@ -127,7 +129,7 @@ export default function HomePage() {
                 {[
                   "Честная цена — называю сумму до начала работы, не меняю после",
                   "Личный номер — звоните напрямую, без автоответчиков",
-                  `${reviewsData.totalCount} отзывов на Profi.ru — проверьте сами`
+                  "Более 130 отзывов на Profi.ru — проверьте сами"
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-gray-700">
                     <svg className="w-5 h-5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -140,10 +142,10 @@ export default function HomePage() {
             </div>
             <div className="relative aspect-square bg-gray-200 rounded-2xl overflow-hidden">
               <Image
-                src="/placeholders/master.svg"
+                src={`${basePath}/images/master.jpg`}
                 alt={`Мастер ${siteConfig.masterName}`}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 unoptimized
               />
@@ -289,19 +291,91 @@ export default function HomePage() {
             <li>замена насосов</li>
             <li>ремонт электронных модулей</li>
           </ul>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-              <div key={num} className="aspect-square relative bg-gray-200 rounded-lg overflow-hidden">
-                <Image
-                  src={`/placeholders/work-${num}.svg`}
-                  alt={`Пример работы ${num}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  unoptimized
-                />
-              </div>
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[200px]">
+            {/* Большое фото слева */}
+            <div className="md:col-span-2 md:row-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-1.png`}
+                alt="Пример работы 1"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 50vw"
+                unoptimized
+              />
+            </div>
+            {/* Маленькие справа сверху */}
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-2.png`}
+                alt="Пример работы 2"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-3.png`}
+                alt="Пример работы 3"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            {/* Маленькие справа снизу */}
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-4.png`}
+                alt="Пример работы 4"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-5.png`}
+                alt="Пример работы 5"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            {/* Нижний ряд */}
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-6.png`}
+                alt="Пример работы 6"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-7.png`}
+                alt="Пример работы 7"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 25vw"
+                unoptimized
+              />
+            </div>
+            <div className="md:col-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
+              <Image
+                src={`${basePath}/images/works/work-8.png`}
+                alt="Пример работы 8"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 50vw, 50vw"
+                unoptimized
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -333,7 +407,7 @@ export default function HomePage() {
       <section className="py-12 sm:py-16 bg-gray-900 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-            Бельё ждёт. Позвоните — решим проблему сегодня
+            Верну машинку в строй — звоните
           </h2>
           <div className="flex flex-wrap justify-center gap-6 mb-8 text-gray-300">
             <div>Приеду в течение 2 часов</div>
@@ -347,7 +421,7 @@ export default function HomePage() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              Вызвать мастера
+              Позвонить мастеру
             </a>
             <a
               href={siteConfig.whatsappUrl}
