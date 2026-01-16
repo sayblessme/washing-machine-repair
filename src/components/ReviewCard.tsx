@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { Review } from "@/data/reviews";
 
 interface ReviewCardProps {
@@ -5,6 +8,9 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review }: ReviewCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const needsTruncation = review.text.length > 280;
+
   return (
     <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 h-full flex flex-col">
       {/* Header */}
@@ -44,8 +50,20 @@ export function ReviewCard({ review }: ReviewCardProps) {
 
       {/* Review text */}
       <p className="text-gray-600 text-sm flex-grow leading-relaxed">
-        {review.text.length > 280 ? `${review.text.substring(0, 280)}...` : review.text}
+        {isExpanded || !needsTruncation
+          ? review.text
+          : `${review.text.substring(0, 280)}...`}
       </p>
+
+      {/* Expand/collapse button */}
+      {needsTruncation && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-blue-600 text-sm font-medium mt-2 hover:text-blue-700 transition-colors text-left"
+        >
+          {isExpanded ? "Свернуть" : "Читать полностью"}
+        </button>
+      )}
 
       {/* Service tag */}
       <div className="mt-3 pt-3 border-t border-gray-100">

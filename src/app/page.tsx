@@ -26,25 +26,25 @@ export default function HomePage() {
 
             <ul className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-10 text-gray-700">
               <li className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Назову точную цену ДО начала работы
               </li>
               <li className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Гарантия 12 месяцев — сломается, починю бесплатно
               </li>
               <li className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Оплата только после проверки работы
               </li>
               <li className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 Рейтинг {reviewsData.rating} на Profi.ru
@@ -142,7 +142,7 @@ export default function HomePage() {
             </div>
             <div className="relative aspect-square bg-gray-200 rounded-2xl overflow-hidden">
               <Image
-                src={`${basePath}/images/master.jpg`}
+                src={`${basePath}/images/master.webp`}
                 alt={`Мастер ${siteConfig.masterName}`}
                 fill
                 className="object-cover object-top"
@@ -295,7 +295,7 @@ export default function HomePage() {
             {/* Большое фото слева */}
             <div className="md:col-span-2 md:row-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-1.png`}
+                src={`${basePath}/images/works/work-1.webp`}
                 alt="Пример работы 1"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -306,7 +306,7 @@ export default function HomePage() {
             {/* Маленькие справа сверху */}
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-2.png`}
+                src={`${basePath}/images/works/work-2.webp`}
                 alt="Пример работы 2"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -316,7 +316,7 @@ export default function HomePage() {
             </div>
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-3.png`}
+                src={`${basePath}/images/works/work-3.webp`}
                 alt="Пример работы 3"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -327,7 +327,7 @@ export default function HomePage() {
             {/* Маленькие справа снизу */}
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-4.png`}
+                src={`${basePath}/images/works/work-4.webp`}
                 alt="Пример работы 4"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -337,7 +337,7 @@ export default function HomePage() {
             </div>
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-5.png`}
+                src={`${basePath}/images/works/work-5.webp`}
                 alt="Пример работы 5"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -348,7 +348,7 @@ export default function HomePage() {
             {/* Нижний ряд */}
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-6.png`}
+                src={`${basePath}/images/works/work-6.webp`}
                 alt="Пример работы 6"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -358,7 +358,7 @@ export default function HomePage() {
             </div>
             <div className="relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-7.png`}
+                src={`${basePath}/images/works/work-7.webp`}
                 alt="Пример работы 7"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
@@ -368,7 +368,7 @@ export default function HomePage() {
             </div>
             <div className="md:col-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={`${basePath}/images/works/work-8.png`}
+                src={`${basePath}/images/works/work-8.webp`}
                 alt="Пример работы 8"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-300"
