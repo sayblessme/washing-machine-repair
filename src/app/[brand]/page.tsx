@@ -4,7 +4,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { brands, getBrandBySlug, getAllBrandSlugs } from "@/data/brands";
 import { siteConfig } from "@/data/site";
+import { reviewsData } from "@/data/reviews";
 import { ServiceJsonLd } from "@/components/JsonLd";
+import { ReviewCard } from "@/components/ReviewCard";
 
 interface BrandPageProps {
   params: Promise<{ brand: string }>;
@@ -148,21 +150,9 @@ export default async function BrandPage({ params }: BrandPageProps) {
           </div>
 
           {/* Reviews Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bg-gray-100 rounded-lg overflow-hidden">
-                <div className="aspect-[3/4] relative bg-gray-200">
-                  <Image
-                    src={`/placeholders/review-${num}.svg`}
-                    alt={`Отзыв о ремонте ${brand.name} с Profi.ru ${num}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    unoptimized
-                  />
-                </div>
-                <p className="text-xs text-gray-500 text-center py-2">Отзыв с Profi.ru</p>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {reviewsData.reviews.slice(0, 4).map((review) => (
+              <ReviewCard key={review.id} review={review} />
             ))}
           </div>
         </div>
