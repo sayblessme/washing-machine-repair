@@ -18,7 +18,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Ремонт стиральной машины на дому — приеду в течение 2 часов
+              Ремонт стиральной машины в СПб на дому — приеду в течение 2 часов
             </h1>
             <p className="text-lg sm:text-xl text-gray-600 mb-8">
               Оставьте заявку — перезвоню в течение 5 минут
