@@ -120,7 +120,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                Почему выбирают меня, а не сервисный центр
+                Ремонт без переплаты
               </h2>
               <p className="text-gray-600 mb-6">
                 Меня зовут {siteConfig.masterName}. За {siteConfig.yearsExperience} лет починил более 3000 стиральных машин. Работаю сам — без диспетчеров, накруток и "менеджеров". Вы платите только за ремонт, а не за офис и рекламу сервисного центра.
