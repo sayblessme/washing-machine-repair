@@ -6,8 +6,10 @@ import { Footer } from "@/components/Footer";
 import { siteConfig } from "@/data/site";
 
 const inter = Inter({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["cyrillic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
