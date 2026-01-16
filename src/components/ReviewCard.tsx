@@ -44,7 +44,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
 
       {/* Review text */}
       <p className="text-gray-600 text-sm flex-grow leading-relaxed">
-        {review.text.length > 200 ? `${review.text.substring(0, 200)}...` : review.text}
+        {review.text.length > 280 ? `${review.text.substring(0, 280)}...` : review.text}
       </p>
 
       {/* Service tag */}
