@@ -67,19 +67,23 @@ export default function BrandsPage() {
             ))}
           </div>
 
-          {/* All brands grid */}
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Все {brands.length} брендов</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {sortedBrands.map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/${brand.slug}`}
-                className="bg-gray-50 px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 text-center"
-              >
-                {brand.name}
-              </Link>
-            ))}
-          </div>
+          {/* Brands without logos */}
+          {brands.filter(b => !b.logo).length > 0 && (
+            <>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Другие бренды</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {brands.filter(b => !b.logo).sort((a, b) => a.name.localeCompare(b.name)).map((brand) => (
+                  <Link
+                    key={brand.slug}
+                    href={`/${brand.slug}`}
+                    className="bg-gray-50 px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 text-center"
+                  >
+                    {brand.name}
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
 

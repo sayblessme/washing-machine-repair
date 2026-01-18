@@ -24,7 +24,7 @@ export const brands: Brand[] = [
   { slug: "ardo", name: "ARDO", nameLower: "ARDO", logo: `${basePath}/images/brands/ardo.png` },
   { slug: "asko", name: "Asko", nameLower: "Asko", logo: `${basePath}/images/brands/Asko-logo.png` },
   { slug: "brandt", name: "Brandt", nameLower: "Brandt", logo: `${basePath}/images/brands/Logo_Brandt_.png` },
-  { slug: "bompani", name: "Bompani", nameLower: "Bompani", logo: `${basePath}/images/brands/2606-bompani_logo.webp`, scale: 1.6 },
+  { slug: "bompani", name: "Bompani", nameLower: "Bompani", logo: `${basePath}/images/brands/2606-bompani_logo.webp`, scale: 4.8 },
   { slug: "eurosoba", name: "Eurosoba", nameLower: "Eurosoba", logo: `${basePath}/images/brands/eurosoba.png` },
   { slug: "haier", name: "Haier", nameLower: "Haier", logo: "" },
   { slug: "hoover", name: "Hoover", nameLower: "Hoover", logo: `${basePath}/images/brands/Hoover-Logo.svg.png` },
