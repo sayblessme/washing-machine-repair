@@ -1,9 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
-import { brands, getBrandsWithLogos } from "@/data/brands";
+import { brands } from "@/data/brands";
 import { siteConfig } from "@/data/site";
 
-const basePath = "/washing-master";
+// Топ-12 брендов (как в футере) — они идут первыми
+const topBrandSlugs = [
+  "samsung", "lg", "bosch", "siemens", "electrolux", "indesit",
+  "ariston", "beko", "whirlpool", "candy", "zanussi", "haier"
+];
+
+// Сортируем: сначала топ-12, потом остальные в алфавитном порядке
+const sortedBrands = [
+  ...topBrandSlugs.map(slug => brands.find(b => b.slug === slug)!),
+  ...brands.filter(b => !topBrandSlugs.includes(b.slug)).sort((a, b) => a.name.localeCompare(b.name))
+];
 
 export const metadata = {
   title: `Все бренды стиральных машин | Ремонт в ${siteConfig.city}`,
@@ -32,46 +41,15 @@ export default function BrandsPage() {
         </div>
       </section>
 
-      {/* Brands with logos */}
+      {/* All brands grid */}
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            Основные бренды
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {getBrandsWithLogos().map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/${brand.slug}`}
-                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4"
-              >
-                <Image
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={Math.round(120 * (brand.scale || 1))}
-                  height={Math.round(48 * (brand.scale || 1))}
-                  className="object-contain max-h-12"
-                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
-                  unoptimized
-                />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* All brands grid */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            Все {brands.length} брендов
-          </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {brands.map((brand) => (
+            {sortedBrands.map((brand) => (
               <Link
                 key={brand.slug}
                 href={`/${brand.slug}`}
-                className="bg-white px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 text-center"
+                className="bg-gray-50 px-4 py-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 text-center"
               >
                 {brand.name}
               </Link>

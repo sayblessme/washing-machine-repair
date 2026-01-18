@@ -129,18 +129,38 @@ export function Header() {
 
               <div className="px-4 py-2">
                 <div className="text-sm font-medium text-gray-500 mb-2">Бренды</div>
-                <div className="grid grid-cols-3 gap-x-4 gap-y-1 max-h-48 overflow-y-auto text-sm">
-                  {brands.map((brand) => (
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                  {[
+                    { slug: "samsung", name: "Samsung" },
+                    { slug: "lg", name: "LG" },
+                    { slug: "bosch", name: "Bosch" },
+                    { slug: "siemens", name: "Siemens" },
+                    { slug: "electrolux", name: "Electrolux" },
+                    { slug: "indesit", name: "Indesit" },
+                    { slug: "ariston", name: "Ariston" },
+                    { slug: "beko", name: "Beko" },
+                    { slug: "whirlpool", name: "Whirlpool" },
+                    { slug: "candy", name: "Candy" },
+                    { slug: "zanussi", name: "Zanussi" },
+                    { slug: "haier", name: "Haier" },
+                  ].map((brand) => (
                     <Link
                       key={brand.slug}
                       href={`/${brand.slug}`}
-                      className="py-1 text-gray-600 hover:text-gray-900 truncate"
+                      className="py-1 text-gray-600 hover:text-gray-900"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {brand.name}
                     </Link>
                   ))}
                 </div>
+                <Link
+                  href="/brands"
+                  className="text-blue-600 hover:text-blue-700 mt-2 block text-sm"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Все 51 бренд →
+                </Link>
               </div>
 
               <Link
