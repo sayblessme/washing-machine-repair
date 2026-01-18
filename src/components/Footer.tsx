@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { brands } from "@/data/brands";
 import { siteConfig } from "@/data/site";
 
 export function Footer() {
@@ -32,7 +31,20 @@ export function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Ремонтируем бренды</h3>
             <ul className="grid grid-cols-2 gap-2 text-sm">
-              {brands.map((brand) => (
+              {[
+                { slug: "samsung", name: "Samsung" },
+                { slug: "lg", name: "LG" },
+                { slug: "bosch", name: "Bosch" },
+                { slug: "siemens", name: "Siemens" },
+                { slug: "electrolux", name: "Electrolux" },
+                { slug: "indesit", name: "Indesit" },
+                { slug: "hotpoint-ariston", name: "Ariston" },
+                { slug: "beko", name: "Beko" },
+                { slug: "whirlpool", name: "Whirlpool" },
+                { slug: "candy", name: "Candy" },
+                { slug: "zanussi", name: "Zanussi" },
+                { slug: "haier", name: "Haier" },
+              ].map((brand) => (
                 <li key={brand.slug}>
                   <Link
                     href={`/${brand.slug}`}
@@ -43,6 +55,9 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+            <Link href="/#brands" className="text-blue-400 hover:text-blue-300 mt-3 block text-sm">
+              Все 53 бренда →
+            </Link>
           </div>
 
           {/* Contact */}

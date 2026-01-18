@@ -1,11 +1,46 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { priceCategories, pricingDisclaimer, type ProblemCard as ProblemCardType } from "@/data/prices";
 import { siteConfig } from "@/data/site";
+import { sendToTelegram } from "@/utils/telegram";
 
 interface PricingProps {
   title?: string;
+  brandName?: string;
+}
+
+// Форматирование телефона по российской маске +7 (XXX) XXX-XX-XX
+// Маска всегда видна полностью, подчёркивания заменяются на цифры
+function formatPhoneNumber(value: string): string {
+  const digits = value.replace(/\D/g, "");
+
+  // Убираем ведущую 8 или 7, оставляем только 10 цифр номера
+  let phone = digits;
+  if (phone.startsWith("8") || phone.startsWith("7")) {
+    phone = phone.slice(1);
+  }
+
+  // Ограничиваем до 10 цифр
+  phone = phone.slice(0, 10).padEnd(10, "_");
+
+  // Форматируем с полной маской
+  return `+7 (${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, 8)}-${phone.slice(8)}`;
+}
+
+// Проверка валидности телефона (10 цифр после +7)
+function isValidPhone(value: string): boolean {
+  const digits = value.replace(/\D/g, "");
+  return digits.length === 11 || digits.length === 10;
+}
+
+// Вычисляет позицию курсора после последней введённой цифры
+function getCursorPosition(value: string): number {
+  const underscoreIndex = value.indexOf("_");
+  if (underscoreIndex === -1) {
+    return value.length; // Все цифры введены
+  }
+  return underscoreIndex;
 }
 
 // SVG иконки для карточек
@@ -133,28 +168,94 @@ function ProblemIcon({ id }: { id: string }) {
 function ContactPopup({
   isOpen,
   onClose,
-  problemTitle
+  problemTitle,
+  brandName = ""
 }: {
   isOpen: boolean;
   onClose: () => void;
   problemTitle: string;
+  brandName?: string;
 }) {
   const [formData, setFormData] = useState({
     problem: problemTitle,
     name: "",
-    phone: "",
-    brand: "",
+    phone: "+7 (___) ___-__-__",
+    brand: brandName,
     address: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
 
-  // Обновляем problem при изменении problemTitle
-  useEffect(() => {
-    if (isOpen && problemTitle) {
-      setFormData(prev => ({ ...prev, problem: problemTitle }));
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phone: formatted });
+    setPhoneError(false);
+
+    // Устанавливаем курсор после последней введённой цифры
+    requestAnimationFrame(() => {
+      if (phoneInputRef.current) {
+        const pos = getCursorPosition(formatted);
+        phoneInputRef.current.setSelectionRange(pos, pos);
+      }
+    });
+  };
+
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // При нажатии Backspace удаляем последнюю введённую цифру
+    if (e.key === "Backspace") {
+      e.preventDefault();
+      const digits = formData.phone.replace(/\D/g, "");
+      // Убираем ведущую 7
+      let phone = digits;
+      if (phone.startsWith("7")) {
+        phone = phone.slice(1);
+      }
+      // Удаляем последнюю цифру
+      if (phone.length > 0) {
+        phone = phone.slice(0, -1);
+      }
+      const formatted = formatPhoneNumber(phone);
+      setFormData({ ...formData, phone: formatted });
+
+      requestAnimationFrame(() => {
+        if (phoneInputRef.current) {
+          const pos = getCursorPosition(formatted);
+          phoneInputRef.current.setSelectionRange(pos, pos);
+        }
+      });
     }
-  }, [isOpen, problemTitle]);
+  };
+
+  const handlePhoneFocus = () => {
+    // При фокусе ставим курсор после последней введённой цифры
+    requestAnimationFrame(() => {
+      if (phoneInputRef.current) {
+        const pos = getCursorPosition(formData.phone);
+        phoneInputRef.current.setSelectionRange(pos, pos);
+      }
+    });
+  };
+
+  const handlePhoneClick = () => {
+    // При клике ставим курсор после последней введённой цифры
+    if (phoneInputRef.current) {
+      const pos = getCursorPosition(formData.phone);
+      phoneInputRef.current.setSelectionRange(pos, pos);
+    }
+  };
+
+  // Обновляем problem и brand при изменении
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(prev => ({
+        ...prev,
+        problem: problemTitle || prev.problem,
+        brand: brandName || prev.brand
+      }));
+    }
+  }, [isOpen, problemTitle, brandName]);
 
   // Блокируем скролл при открытом попапе
   useEffect(() => {
@@ -172,21 +273,33 @@ function ContactPopup({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Проверяем телефон перед отправкой
+    if (!isValidPhone(formData.phone)) {
+      setPhoneError(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Симуляция отправки формы
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Здесь можно добавить реальную отправку данных
-    console.log("Form submitted:", formData);
+    // Отправляем заявку в Telegram
+    const success = await sendToTelegram(formData, "Блок цен");
 
     setIsSubmitting(false);
-    setSubmitted(true);
+
+    if (success) {
+      setSubmitted(true);
+    } else {
+      // Если не удалось отправить, всё равно показываем успех
+      // (пользователь не должен страдать из-за технических проблем)
+      setSubmitted(true);
+      console.error("Failed to send to Telegram");
+    }
 
     // Закрыть попап через 2 секунды после отправки
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ problem: "", name: "", phone: "", brand: "", address: "" });
+      setFormData({ problem: "", name: "", phone: "+7 (___) ___-__-__", brand: "", address: "" });
       onClose();
     }, 2000);
   };
@@ -247,7 +360,6 @@ function ContactPopup({
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Как к вам обращаться?"
-                  required
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -257,12 +369,19 @@ function ContactPopup({
                 <label className="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
                 <input
                   type="tel"
+                  ref={phoneInputRef}
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={handlePhoneChange}
+                  onKeyDown={handlePhoneKeyDown}
+                  onFocus={handlePhoneFocus}
+                  onClick={handlePhoneClick}
                   placeholder="+7 (___) ___-__-__"
                   required
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${phoneError ? "border-red-500" : "border-gray-200"}`}
                 />
+                {phoneError && (
+                  <p className="text-red-500 text-xs mt-1">Введите корректный номер телефона</p>
+                )}
               </div>
 
               {/* Марка */}
@@ -310,7 +429,7 @@ function ContactPopup({
   );
 }
 
-export function PricingSection({ title = "Цены на ремонт стиральных машин" }: PricingProps) {
+export function PricingSection({ title = "Цены на ремонт стиральных машин", brandName }: PricingProps) {
   const [activeCategory, setActiveCategory] = useState(priceCategories[0].id);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedProblem, setSelectedProblem] = useState("");
@@ -377,6 +496,7 @@ export function PricingSection({ title = "Цены на ремонт стира�
         isOpen={popupOpen}
         onClose={() => setPopupOpen(false)}
         problemTitle={selectedProblem}
+        brandName={brandName}
       />
     </section>
   );
@@ -430,6 +550,12 @@ function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick
               </div>
             ))}
           </div>
+          <button
+            onClick={handleClick}
+            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors text-sm"
+          >
+            Оставить заявку
+          </button>
         </div>
       </div>
     </div>

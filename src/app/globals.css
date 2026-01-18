@@ -20,4 +20,5 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* 80px = хедер 64px + отступ 16px */
 }

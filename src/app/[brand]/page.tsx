@@ -97,16 +97,16 @@ export default async function BrandPage({ params }: BrandPageProps) {
       </section>
 
       {/* Prices Section */}
-      <PricingSection title={`Цены на ремонт стиральных машин ${brand.name}`} />
+      <PricingSection title={`Цены на ремонт стиральных машин ${brand.name}`} brandName={brand.name} />
 
       {/* Reviews Section */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-4">
-            Отзывы о ремонте {brand.name}
+            Отзывы о ремонте
           </h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-4">
-            Ниже — реальные отзывы клиентов о ремонте стиральных машин {brand.name} с Profi.ru.
+            Ниже — реальные отзывы клиентов о ремонте стиральных машин с Profi.ru.
           </p>
           <div className="text-center mb-8">
             <a
@@ -123,7 +123,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
           </div>
 
           {/* Reviews Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {reviewsData.reviews.slice(0, 4).map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}
@@ -188,28 +188,6 @@ export default async function BrandPage({ params }: BrandPageProps) {
             </svg>
             Вызвать мастера
           </a>
-        </div>
-      </section>
-
-      {/* Other Brands */}
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-xl font-bold text-gray-900 text-center mb-6">
-            Также ремонтирую другие бренды
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3">
-            {brands
-              .filter((b) => b.slug !== brand.slug)
-              .map((b) => (
-                <Link
-                  key={b.slug}
-                  href={`/${b.slug}`}
-                  className="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors text-sm"
-                >
-                  {b.name}
-                </Link>
-              ))}
-          </div>
         </div>
       </section>
     </>

@@ -29,17 +29,21 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-6">
             <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
               Главная
             </Link>
 
             {/* Brands Dropdown */}
-            <div className="relative">
+            <div
+              className="relative"
+              onMouseEnter={() => setIsBrandsOpen(true)}
+              onMouseLeave={() => setIsBrandsOpen(false)}
+            >
               <button
-                onClick={() => setIsBrandsOpen(!isBrandsOpen)}
-                onBlur={() => setTimeout(() => setIsBrandsOpen(false), 150)}
                 className="flex items-center gap-1 text-gray-600 hover:text-gray-900 transition-colors"
+                aria-expanded={isBrandsOpen}
+                aria-haspopup="true"
               >
                 Бренды
                 <svg
@@ -53,16 +57,20 @@ export function Header() {
               </button>
 
               {isBrandsOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
-                  {brands.map((brand) => (
-                    <Link
-                      key={brand.slug}
-                      href={`/${brand.slug}`}
-                      className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-                    >
-                      {brand.name}
-                    </Link>
-                  ))}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                  <div className="w-[700px] bg-white rounded-lg shadow-lg border border-gray-100 p-4">
+                    <div className="grid grid-cols-6 gap-x-4 gap-y-1 text-sm">
+                      {brands.map((brand) => (
+                        <Link
+                          key={brand.slug}
+                          href={`/${brand.slug}`}
+                          className="text-gray-600 hover:text-gray-900 transition-colors py-1 truncate"
+                        >
+                          {brand.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -77,7 +85,7 @@ export function Header() {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             <a
               href={`tel:${siteConfig.phoneClean}`}
               className="text-gray-600 hover:text-gray-900 transition-colors text-sm"
@@ -95,7 +103,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-gray-600"
+            className="lg:hidden p-2 text-gray-600"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMobileMenuOpen ? (
@@ -109,7 +117,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100">
+          <div className="lg:hidden py-4 border-t border-gray-100">
             <nav className="flex flex-col gap-2">
               <Link
                 href="/"
@@ -121,12 +129,12 @@ export function Header() {
 
               <div className="px-4 py-2">
                 <div className="text-sm font-medium text-gray-500 mb-2">Бренды</div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-x-4 gap-y-1 max-h-48 overflow-y-auto text-sm">
                   {brands.map((brand) => (
                     <Link
                       key={brand.slug}
                       href={`/${brand.slug}`}
-                      className="py-1 text-gray-600 hover:text-gray-900"
+                      className="py-1 text-gray-600 hover:text-gray-900 truncate"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {brand.name}

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { siteConfig } from "@/data/site";
 
 const inter = Inter({
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${inter.className} antialiased`}>
+        <SmoothScroll />
         <Header />
         <main>{children}</main>
         <Footer />

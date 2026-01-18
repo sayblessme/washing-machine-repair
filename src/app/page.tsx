@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/data/site";
-import { brands } from "@/data/brands";
+import { brands, getBrandsWithLogos } from "@/data/brands";
 import { reviewsData } from "@/data/reviews";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { ReviewCard } from "@/components/ReviewCard";
 import { PricingSection } from "@/components/PricingSection";
+import { ConsultationForm } from "@/components/ConsultationForm";
 
 const basePath = "/washing-master";
 
@@ -107,7 +108,7 @@ export default function HomePage() {
           </div>
 
           {/* Reviews Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {reviewsData.reviews.slice(0, 8).map((review) => (
               <ReviewCard key={review.id} review={review} />
             ))}
@@ -190,58 +191,7 @@ export default function HomePage() {
 
           {/* Consultation Form */}
           <div className="max-w-md mx-auto bg-white rounded-2xl p-6 sm:p-8">
-            <form
-              action={siteConfig.telegramUrl}
-              method="get"
-              target="_blank"
-              className="space-y-4"
-            >
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Ваше имя
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Иван"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Номер телефона
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="+7 (999) 123-45-67"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="problem" className="block text-sm font-medium text-gray-700 mb-1">
-                  Опишите проблему
-                </label>
-                <textarea
-                  id="problem"
-                  name="text"
-                  rows={3}
-                  placeholder="Машинка не сливает воду..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Отправить заявку
-              </button>
-              <p className="text-xs text-gray-500 text-center">
-                Выезд мастера — {siteConfig.prices.visit}
-              </p>
-            </form>
+            <ConsultationForm />
           </div>
         </div>
       </section>
@@ -356,20 +306,38 @@ export default function HomePage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
             Ремонт стиральных машин любых марок
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* Основные бренды с логотипами */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            {getBrandsWithLogos().map((brand) => (
+              <Link
+                key={brand.slug}
+                href={`/${brand.slug}`}
+                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4"
+              >
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  width={Math.round(120 * (brand.scale || 1))}
+                  height={Math.round(48 * (brand.scale || 1))}
+                  className="object-contain max-h-12"
+                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
+                  unoptimized
+                />
+              </Link>
+            ))}
+          </div>
+          {/* Все бренды текстовым списком */}
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
             {brands.map((brand) => (
               <Link
                 key={brand.slug}
                 href={`/${brand.slug}`}
-                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg text-gray-700 font-semibold hover:bg-blue-50 hover:text-blue-600 transition-colors border border-gray-100 hover:border-blue-200"
+                className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
               >
                 {brand.name}
               </Link>
             ))}
           </div>
-          <p className="text-gray-500 text-sm text-center mt-4">
-            Каждая ссылка ведёт на отдельную бренд-страницу
-          </p>
         </div>
       </section>
 
