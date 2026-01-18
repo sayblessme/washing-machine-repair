@@ -140,6 +140,7 @@ function ContactPopup({
   problemTitle: string;
 }) {
   const [formData, setFormData] = useState({
+    problem: problemTitle,
     name: "",
     phone: "",
     brand: "",
@@ -147,6 +148,11 @@ function ContactPopup({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // Обновляем problem при изменении problemTitle
+  if (isOpen && formData.problem !== problemTitle && formData.problem === "") {
+    setFormData({ ...formData, problem: problemTitle });
+  }
 
   if (!isOpen) return null;
 
@@ -158,7 +164,7 @@ function ContactPopup({
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Здесь можно добавить реальную отправку данных
-    console.log("Form submitted:", { ...formData, problem: problemTitle });
+    console.log("Form submitted:", formData);
 
     setIsSubmitting(false);
     setSubmitted(true);
@@ -166,7 +172,7 @@ function ContactPopup({
     // Закрыть попап через 2 секунды после отправки
     setTimeout(() => {
       setSubmitted(false);
-      setFormData({ name: "", phone: "", brand: "", address: "" });
+      setFormData({ problem: "", name: "", phone: "", brand: "", address: "" });
       onClose();
     }, 2000);
   };
@@ -207,14 +213,15 @@ function ContactPopup({
             <p className="text-gray-600 text-sm mb-6">Мастер перезвонит в течение 15 минут</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Проблема (автозаполнение) */}
+              {/* Проблема (редактируемое) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Проблема</label>
                 <input
                   type="text"
-                  value={problemTitle}
-                  readOnly
-                  className="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-700"
+                  value={formData.problem}
+                  onChange={(e) => setFormData({ ...formData, problem: e.target.value })}
+                  placeholder="Опишите проблему"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
 

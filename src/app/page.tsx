@@ -191,7 +191,7 @@ export default function HomePage() {
           {/* Consultation Form */}
           <div className="max-w-md mx-auto bg-white rounded-2xl p-6 sm:p-8">
             <form
-              action={siteConfig.whatsappUrl}
+              action={siteConfig.telegramUrl}
               method="get"
               target="_blank"
               className="space-y-4"
@@ -394,12 +394,12 @@ export default function HomePage() {
               Позвонить мастеру
             </a>
             <a
-              href={siteConfig.whatsappUrl}
+              href={siteConfig.telegramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/20 transition-colors border border-white/20"
             >
-              Написать в WhatsApp
+              Написать в Telegram
             </a>
           </div>
         </div>
