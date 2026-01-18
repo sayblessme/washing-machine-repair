@@ -368,6 +368,9 @@ function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick
     // На мобильных устройствах сначала раскрываем подробности
     if (window.innerWidth < 768) {
       setIsOpen(!isOpen);
+    } else {
+      // На десктопе сразу открываем попап
+      onCardClick(card.title);
     }
   };
 
