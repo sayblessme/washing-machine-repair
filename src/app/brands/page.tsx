@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { brands } from "@/data/brands";
+import Image from "next/image";
+import { brands, getBrandsWithLogos } from "@/data/brands";
 import { siteConfig } from "@/data/site";
 
 // Топ-12 брендов (как в футере) — они идут первыми
@@ -20,6 +21,8 @@ export const metadata = {
 };
 
 export default function BrandsPage() {
+  const brandsWithLogos = getBrandsWithLogos();
+
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -41,9 +44,31 @@ export default function BrandsPage() {
         </div>
       </section>
 
-      {/* All brands grid */}
+      {/* Brands with logos */}
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-12">
+            {brandsWithLogos.map((brand) => (
+              <Link
+                key={brand.slug}
+                href={`/${brand.slug}`}
+                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4"
+              >
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  width={Math.round(120 * (brand.scale || 1))}
+                  height={Math.round(48 * (brand.scale || 1))}
+                  className="object-contain max-h-12"
+                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
+                  unoptimized
+                />
+              </Link>
+            ))}
+          </div>
+
+          {/* All brands grid */}
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Все {brands.length} брендов</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {sortedBrands.map((brand) => (
               <Link
