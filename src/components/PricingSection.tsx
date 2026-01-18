@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { priceCategories, pricingDisclaimer, type ProblemCard as ProblemCardType } from "@/data/prices";
+import { siteConfig } from "@/data/site";
 
 interface PricingProps {
   title?: string;
@@ -128,10 +129,177 @@ function ProblemIcon({ id }: { id: string }) {
   return icons[id] || <div className={iconClass} />;
 }
 
+// Компонент попапа с формой
+function ContactPopup({
+  isOpen,
+  onClose,
+  problemTitle
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  problemTitle: string;
+}) {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    brand: "",
+    address: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Симуляция отправки формы
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Здесь можно добавить реальную отправку данных
+    console.log("Form submitted:", { ...formData, problem: problemTitle });
+
+    setIsSubmitting(false);
+    setSubmitted(true);
+
+    // Закрыть попап через 2 секунды после отправки
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: "", phone: "", brand: "", address: "" });
+      onClose();
+    }, 2000);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Кнопка закрытия */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+          aria-label="Закрыть"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        {submitted ? (
+          <div className="text-center py-8">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Заявка отправлена!</h3>
+            <p className="text-gray-600">Мастер свяжется с вами в ближайшее время</p>
+          </div>
+        ) : (
+          <>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Оставить заявку</h3>
+            <p className="text-gray-600 text-sm mb-6">Мастер перезвонит в течение 15 минут</p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Проблема (автозаполнение) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Проблема</label>
+                <input
+                  type="text"
+                  value={problemTitle}
+                  readOnly
+                  className="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-700"
+                />
+              </div>
+
+              {/* Имя */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Ваше имя</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Как к вам обращаться?"
+                  required
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Телефон */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="+7 (___) ___-__-__"
+                  required
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Марка */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Марка стиральной машины</label>
+                <input
+                  type="text"
+                  value={formData.brand}
+                  onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                  placeholder="Например, Samsung, LG, Bosch..."
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Адрес */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Адрес или ближайшее метро</label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  placeholder="Улица, дом или станция метро"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Кнопка отправки */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Отправка..." : "Отправить заявку"}
+              </button>
+
+              {/* Контактные данные */}
+              <p className="text-center text-sm text-gray-500">
+                или позвоните: <a href={`tel:${siteConfig.phoneClean}`} className="text-blue-600 font-medium hover:underline">{siteConfig.phone}</a>
+              </p>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function PricingSection({ title = "Цены на ремонт стиральных машин" }: PricingProps) {
   const [activeCategory, setActiveCategory] = useState(priceCategories[0].id);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedProblem, setSelectedProblem] = useState("");
 
   const currentCategory = priceCategories.find((cat) => cat.id === activeCategory) || priceCategories[0];
+
+  const handleCardClick = (problemTitle: string) => {
+    setSelectedProblem(problemTitle);
+    setPopupOpen(true);
+  };
 
   return (
     <section id="prices" className="py-12 sm:py-16 bg-white">
@@ -170,7 +338,7 @@ export function PricingSection({ title = "Цены на ремонт стира�
           className="grid grid-cols-2 md:grid-cols-3 gap-4"
         >
           {currentCategory.cards.map((card) => (
-            <ProblemCard key={card.id} card={card} />
+            <ProblemCard key={card.id} card={card} onCardClick={handleCardClick} />
           ))}
         </div>
 
@@ -182,18 +350,37 @@ export function PricingSection({ title = "Цены на ремонт стира�
           {pricingDisclaimer}
         </p>
       </div>
+
+      {/* Попап с формой */}
+      <ContactPopup
+        isOpen={popupOpen}
+        onClose={() => setPopupOpen(false)}
+        problemTitle={selectedProblem}
+      />
     </section>
   );
 }
 
-function ProblemCard({ card }: { card: ProblemCardType }) {
+function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick: (title: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    // На мобильных устройствах сначала раскрываем подробности
+    if (window.innerWidth < 768) {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  const handleOrderClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onCardClick(card.title);
+  };
 
   return (
     <div className="group relative">
       {/* Card */}
       <div
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleClick}
         className="bg-white rounded-2xl border-2 border-gray-100 p-4 sm:p-6 text-center
                    hover:border-blue-200 hover:shadow-lg transition-all cursor-pointer h-full
                    flex flex-col justify-between min-h-[180px] sm:min-h-[220px]"
@@ -239,6 +426,13 @@ function ProblemCard({ card }: { card: ProblemCardType }) {
               </div>
             ))}
           </div>
+          {/* Кнопка заказать в dropdown */}
+          <button
+            onClick={handleOrderClick}
+            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors text-sm"
+          >
+            Оставить заявку
+          </button>
         </div>
       </div>
 
@@ -256,6 +450,13 @@ function ProblemCard({ card }: { card: ProblemCardType }) {
               <span className="font-medium text-gray-900 text-sm whitespace-nowrap">{item.price}</span>
             </div>
           ))}
+          {/* Кнопка заказать на мобильных */}
+          <button
+            onClick={handleOrderClick}
+            className="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors text-sm"
+          >
+            Оставить заявку
+          </button>
         </div>
       )}
     </div>

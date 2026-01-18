@@ -213,17 +213,6 @@ export const priceCategories: PriceCategory[] = [
           { name: "Полная профилактика", price: "от 2500 ₽" },
         ],
       },
-      {
-        id: "urgent",
-        title: "Срочный выезд",
-        price: "+30%",
-        icon: "⏰",
-        subItems: [
-          { name: "Выезд в течение 1 часа", price: "+30% к ремонту" },
-          { name: "Выезд в выходные", price: "+20% к ремонту" },
-          { name: "Выезд после 20:00", price: "+30% к ремонту" },
-        ],
-      },
     ],
   },
 ];
