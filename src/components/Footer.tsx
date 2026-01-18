@@ -38,7 +38,7 @@ export function Footer() {
                 { slug: "siemens", name: "Siemens" },
                 { slug: "electrolux", name: "Electrolux" },
                 { slug: "indesit", name: "Indesit" },
-                { slug: "hotpoint-ariston", name: "Ariston" },
+                { slug: "ariston", name: "Ariston" },
                 { slug: "beko", name: "Beko" },
                 { slug: "whirlpool", name: "Whirlpool" },
                 { slug: "candy", name: "Candy" },
@@ -55,8 +55,8 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-            <Link href="/#brands" className="text-blue-400 hover:text-blue-300 mt-3 block text-sm">
-              Все 53 бренда →
+            <Link href="/brands" className="text-blue-400 hover:text-blue-300 mt-3 block text-sm">
+              Все 51 бренд →
             </Link>
           </div>
 
