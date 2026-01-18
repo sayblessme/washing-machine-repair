@@ -1,10 +1,131 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { priceCategories, pricingDisclaimer, type ProblemCard as ProblemCardType } from "@/data/prices";
 
 interface PricingProps {
   title?: string;
+}
+
+// SVG иконки для карточек
+function ProblemIcon({ id }: { id: string }) {
+  const iconClass = "w-10 h-10 sm:w-12 sm:h-12 text-blue-600";
+
+  const icons: Record<string, ReactNode> = {
+    // Неисправности
+    door: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="4" y="2" width="16" height="20" rx="2" />
+        <circle cx="12" cy="11" r="5" />
+        <circle cx="12" cy="11" r="2" />
+        <rect x="17" y="10" width="1.5" height="3" rx="0.5" />
+      </svg>
+    ),
+    "no-drain": (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M12 2C12 2 6 10 6 14a6 6 0 1012 0c0-4-6-12-6-12z" />
+        <path d="M4 4l16 16" strokeWidth="2" />
+      </svg>
+    ),
+    "no-spin": (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 3a9 9 0 019 9" strokeLinecap="round" />
+        <path d="M16 12l-4-4v8l4-4z" fill="currentColor" />
+      </svg>
+    ),
+    "no-heat": (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M12 22c-3 0-6-2-6-6 0-2.5 1.5-4.5 3-6.5S12 6 12 2c0 4 1.5 5.5 3 7.5s3 4 3 6.5c0 4-3 6-6 6z" />
+        <path d="M12 22v-6" />
+        <path d="M9 13l3 3 3-3" />
+      </svg>
+    ),
+    leak: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M7 16a4 4 0 01-4-4c0-2 2-6 4-6s4 4 4 6a4 4 0 01-4 4z" />
+        <path d="M17 22a4 4 0 01-4-4c0-2 2-6 4-6s4 4 4 6a4 4 0 01-4 4z" />
+        <path d="M12 10a3 3 0 01-3-3c0-1.5 1.5-4.5 3-4.5s3 3 3 4.5a3 3 0 01-3 3z" />
+      </svg>
+    ),
+    noise: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" fillOpacity="0.2" />
+        <path d="M11 5L6 9H2v6h4l5 4V5z" />
+        <path d="M15.5 8.5a5 5 0 010 7" />
+        <path d="M18.5 5.5a9 9 0 010 13" />
+      </svg>
+    ),
+    // Замена деталей
+    heating: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" fillOpacity="0.2" />
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+      </svg>
+    ),
+    pump: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="7" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 5V2M12 22v-3M5 12H2M22 12h-3M7.05 7.05L4.93 4.93M19.07 19.07l-2.12-2.12M7.05 16.95l-2.12 2.12M19.07 4.93l-2.12 2.12" />
+      </svg>
+    ),
+    bearings: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+      </svg>
+    ),
+    module: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <rect x="8" y="8" width="8" height="8" rx="1" />
+        <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    ),
+    motor: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 4v2M12 18v2M4 12h2M18 12h2" />
+        <path d="M6.34 6.34l1.42 1.42M16.24 16.24l1.42 1.42M6.34 17.66l1.42-1.42M16.24 7.76l1.42-1.42" />
+      </svg>
+    ),
+    "other-parts": (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    ),
+    // Услуги
+    diagnostics: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.35-4.35" strokeWidth="2" strokeLinecap="round" />
+        <path d="M11 8v6M8 11h6" />
+      </svg>
+    ),
+    installation: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M3 12l9-9 9 9" />
+        <path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" />
+        <rect x="9" y="14" width="6" height="7" />
+      </svg>
+    ),
+    maintenance: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" fill="currentColor" fillOpacity="0.2" />
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" />
+      </svg>
+    ),
+    urgent: (
+      <svg className={iconClass} fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 6v6l4 2" strokeLinecap="round" />
+      </svg>
+    ),
+  };
+
+  return icons[id] || <div className={iconClass} />;
 }
 
 export function PricingSection({ title = "Цены на ремонт стиральных машин" }: PricingProps) {
@@ -78,7 +199,9 @@ function ProblemCard({ card }: { card: ProblemCardType }) {
                    flex flex-col justify-between min-h-[180px] sm:min-h-[220px]"
       >
         <div>
-          <div className="text-3xl sm:text-4xl mb-3">{card.icon}</div>
+          <div className="flex justify-center mb-3">
+            <ProblemIcon id={card.id} />
+          </div>
           <h3 className="font-medium text-gray-900 text-sm sm:text-base mb-2 leading-tight">
             {card.title}
           </h3>
