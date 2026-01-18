@@ -326,18 +326,20 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-          {/* Все бренды текстовым списком */}
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-            {brands.map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/${brand.slug}`}
-                className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-              >
-                {brand.name}
-              </Link>
-            ))}
-          </div>
+          {/* Бренды без логотипов текстовым списком */}
+          {brands.filter(b => !b.logo).length > 0 && (
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+              {brands.filter(b => !b.logo).sort((a, b) => a.name.localeCompare(b.name)).map((brand) => (
+                <Link
+                  key={brand.slug}
+                  href={`/${brand.slug}`}
+                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
+                >
+                  {brand.name}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
