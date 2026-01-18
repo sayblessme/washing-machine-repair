@@ -6,7 +6,7 @@ export const siteConfig = {
   yearsExperience: "10",
   phone: "+7 (951) 665-86-28",
   phoneClean: "+79516658628",
-  telegramUrl: "https://t.me/+79516658628",
+  telegramUrl: "https://t.me/sereja944",
   profiUrl: "https://profi.ru/profile/CherkovskiySV/",
   profiRating: "4,96",
   baseUrl: "https://remont-stiralok.ru",

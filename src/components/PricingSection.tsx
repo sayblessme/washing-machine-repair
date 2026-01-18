@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { priceCategories, pricingDisclaimer, type ProblemCard as ProblemCardType } from "@/data/prices";
 import { siteConfig } from "@/data/site";
 
@@ -150,9 +150,23 @@ function ContactPopup({
   const [submitted, setSubmitted] = useState(false);
 
   // Обновляем problem при изменении problemTitle
-  if (isOpen && formData.problem !== problemTitle && formData.problem === "") {
-    setFormData({ ...formData, problem: problemTitle });
-  }
+  useEffect(() => {
+    if (isOpen && problemTitle) {
+      setFormData(prev => ({ ...prev, problem: problemTitle }));
+    }
+  }, [isOpen, problemTitle]);
+
+  // Блокируем скролл при открытом попапе
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -369,20 +383,8 @@ export function PricingSection({ title = "Цены на ремонт стира�
 }
 
 function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick: (title: string) => void }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleClick = () => {
-    // На мобильных устройствах сначала раскрываем подробности
-    if (window.innerWidth < 768) {
-      setIsOpen(!isOpen);
-    } else {
-      // На десктопе сразу открываем попап
-      onCardClick(card.title);
-    }
-  };
-
-  const handleOrderClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    // Сразу открываем попап на любом устройстве
     onCardClick(card.title);
   };
 
@@ -406,15 +408,7 @@ function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick
         <div>
           <p className="text-blue-600 font-bold text-lg sm:text-xl mb-3">{card.price}</p>
           <span className="inline-flex items-center text-xs text-gray-400">
-            Подробнее
-            <svg
-              className={`w-3 h-3 ml-1 transition-transform ${isOpen ? "rotate-180" : ""} md:hidden`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            Оставить заявку
           </span>
         </div>
       </div>
@@ -436,39 +430,8 @@ function ProblemCard({ card, onCardClick }: { card: ProblemCardType; onCardClick
               </div>
             ))}
           </div>
-          {/* Кнопка заказать в dropdown */}
-          <button
-            onClick={handleOrderClick}
-            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition-colors text-sm"
-          >
-            Оставить заявку
-          </button>
         </div>
       </div>
-
-      {/* Mobile: Expanded list below card */}
-      {isOpen && (
-        <div className="md:hidden mt-2 bg-gray-50 rounded-xl p-3">
-          {card.subItems.map((item, idx) => (
-            <div
-              key={item.name}
-              className={`flex justify-between items-center py-2 ${
-                idx !== card.subItems.length - 1 ? "border-b border-gray-200" : ""
-              }`}
-            >
-              <span className="text-gray-600 text-sm pr-2">{item.name}</span>
-              <span className="font-medium text-gray-900 text-sm whitespace-nowrap">{item.price}</span>
-            </div>
-          ))}
-          {/* Кнопка заказать на мобильных */}
-          <button
-            onClick={handleOrderClick}
-            className="w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors text-sm"
-          >
-            Оставить заявку
-          </button>
-        </div>
-      )}
     </div>
   );
 }
