@@ -7,6 +7,7 @@ import { siteConfig } from "@/data/site";
 import { reviewsData } from "@/data/reviews";
 import { ServiceJsonLd } from "@/components/JsonLd";
 import { ReviewCard } from "@/components/ReviewCard";
+import { PricingSection } from "@/components/PricingSection";
 
 interface BrandPageProps {
   params: Promise<{ brand: string }>;
@@ -96,35 +97,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
       </section>
 
       {/* Prices Section */}
-      <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Цены на ремонт стиральных машин {brand.name}
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
-              <table className="w-full">
-                <tbody>
-                  {[
-                    { service: "Диагностика", price: siteConfig.prices.diagnostics },
-                    { service: "Замена ТЭНа", price: "от 2200 ₽" },
-                    { service: "Замена насоса", price: siteConfig.prices.pumpReplacement },
-                    { service: "Замена подшипников", price: "от 3800 ₽" },
-                  ].map((item, index) => (
-                    <tr key={item.service} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="px-6 py-4 text-gray-700">{item.service}</td>
-                      <td className="px-6 py-4 text-right font-semibold text-gray-900">{item.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="text-gray-500 text-sm text-center mt-4">
-              Точная стоимость определяется после диагностики.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PricingSection title={`Цены на ремонт стиральных машин ${brand.name}`} />
 
       {/* Reviews Section */}
       <section className="py-12 sm:py-16 bg-white">

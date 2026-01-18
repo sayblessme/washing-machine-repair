@@ -5,6 +5,7 @@ import { brands } from "@/data/brands";
 import { reviewsData } from "@/data/reviews";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { ReviewCard } from "@/components/ReviewCard";
+import { PricingSection } from "@/components/PricingSection";
 
 const basePath = "/washing-master";
 
@@ -246,38 +247,7 @@ export default function HomePage() {
       </section>
 
       {/* Prices Section */}
-      <section id="prices" className="py-12 sm:py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Цены на ремонт стиральных машин
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-gray-50 rounded-2xl overflow-hidden">
-              <table className="w-full">
-                <tbody>
-                  {[
-                    { service: "Не сливает воду", price: siteConfig.prices.noWaterDrain },
-                    { service: "Не отжимает", price: siteConfig.prices.noSpin },
-                    { service: "Не греет воду", price: siteConfig.prices.noHeat },
-                    { service: "Течёт", price: siteConfig.prices.leak },
-                    { service: "Не включается", price: siteConfig.prices.noPower },
-                    { service: "Замена ТЭНа", price: siteConfig.prices.heaterReplacement },
-                    { service: "Замена подшипников", price: siteConfig.prices.bearingReplacement },
-                  ].map((item, index) => (
-                    <tr key={item.service} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                      <td className="px-6 py-4 text-gray-700">{item.service}</td>
-                      <td className="px-6 py-4 text-right font-semibold text-gray-900">{item.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="text-gray-500 text-sm text-center mt-4">
-              Выезд + диагностика = {siteConfig.prices.visit}. При ремонте — вычитается из стоимости.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PricingSection />
 
       {/* Works Section */}
       <section className="py-12 sm:py-16 bg-gray-50">
