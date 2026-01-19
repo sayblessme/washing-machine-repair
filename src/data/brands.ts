@@ -10,7 +10,7 @@ const basePath = "/washing-master";
 
 export const brands: Brand[] = [
   // Основные бренды (с логотипами)
-  { slug: "bosch", name: "Bosch", nameLower: "Bosch", logo: `${basePath}/images/brands/bosch.png` },
+  { slug: "bosch", name: "Bosch", nameLower: "Bosch", logo: `${basePath}/images/brands/bosch-logo.png` },
   { slug: "lg", name: "LG", nameLower: "LG", logo: `${basePath}/images/brands/LG_logo_(2014).svg.png` },
   { slug: "samsung", name: "Samsung", nameLower: "Samsung", logo: `${basePath}/images/brands/samsung.png`, scale: 1.4 },
   { slug: "indesit", name: "Indesit", nameLower: "Indesit", logo: `${basePath}/images/brands/Indesit_Company_logo.svg.png` },
@@ -42,10 +42,10 @@ export const brands: Brand[] = [
   { slug: "blomberg", name: "Blomberg", nameLower: "Blomberg", logo: `${basePath}/images/brands/blloomberg.svg` },
   { slug: "daewoo", name: "Daewoo", nameLower: "Daewoo", logo: `${basePath}/images/brands/daewoo-1.svg` },
   { slug: "dexp", name: "DEXP", nameLower: "DEXP", logo: `${basePath}/images/brands/dexp-logo-png_seeklogo-320710.png` },
-  { slug: "gaggenau", name: "Gaggenau", nameLower: "Gaggenau", logo: `${basePath}/images/brands/gaggenau.svg` },
-  { slug: "gorenje", name: "Gorenje", nameLower: "Gorenje", logo: `${basePath}/images/brands/gorenje.svg` },
-  { slug: "ignis", name: "Ignis", nameLower: "Ignis", logo: `${basePath}/images/brands/ignis.svg` },
-  { slug: "ikea", name: "IKEA", nameLower: "IKEA", logo: `${basePath}/images/brands/ikea.svg` },
+  { slug: "gaggenau", name: "Gaggenau", nameLower: "Gaggenau", logo: `${basePath}/images/brands/Gaggenau_Hausgeräte_logo.svg` },
+  { slug: "gorenje", name: "Gorenje", nameLower: "Gorenje", logo: `${basePath}/images/brands/Gorenje_Logo.svg.png` },
+  { slug: "ignis", name: "Ignis", nameLower: "Ignis", logo: `${basePath}/images/brands/ignis-logo-png-transparent.png` },
+  { slug: "ikea", name: "IKEA", nameLower: "IKEA", logo: `${basePath}/images/brands/ikea.png` },
   { slug: "korting", name: "Korting", nameLower: "Korting", logo: `${basePath}/images/brands/korting.png` },
   { slug: "kraft", name: "Kraft", nameLower: "Kraft", logo: `${basePath}/images/brands/kraft.svg` },
   { slug: "kuppersberg", name: "Kuppersberg", nameLower: "Kuppersberg", logo: `${basePath}/images/brands/kuppersberg.png` },
@@ -58,10 +58,10 @@ export const brands: Brand[] = [
   { slug: "schaub-lorenz", name: "Schaub Lorenz", nameLower: "Schaub Lorenz", logo: `${basePath}/images/brands/schaub-lorenz.png` },
   { slug: "smeg", name: "Smeg", nameLower: "Smeg", logo: `${basePath}/images/brands/SMEGLogo.png` },
   { slug: "upo", name: "UPO", nameLower: "UPO", logo: `${basePath}/images/brands/upo-1.svg` },
-  { slug: "vestel", name: "Vestel", nameLower: "Vestel", logo: `${basePath}/images/brands/vestel-1.svg` },
-  { slug: "vestfrost", name: "Vestfrost", nameLower: "Vestfrost", logo: `${basePath}/images/brands/vestfrost.svg` },
+  { slug: "vestel", name: "Vestel", nameLower: "Vestel", logo: `${basePath}/images/brands/vestel.png` },
+  { slug: "vestfrost", name: "Vestfrost", nameLower: "Vestfrost", logo: `${basePath}/images/brands/Vestfrost-logo.png` },
   { slug: "vyatka", name: "Вятка", nameLower: "Вятка", logo: `${basePath}/images/brands/ВЯТКА.png` },
-  { slug: "zanussi", name: "Zanussi", nameLower: "Zanussi", logo: `${basePath}/images/brands/zanussi.svg` },
+  { slug: "zanussi", name: "Zanussi", nameLower: "Zanussi", logo: `${basePath}/images/brands/Logo_Zanussi.png` },
   { slug: "zerowatt", name: "Zerowatt", nameLower: "Zerowatt", logo: `${basePath}/images/brands/zerowatt.png` },
 ];
 
