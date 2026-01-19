@@ -52,14 +52,14 @@ export default function BrandsPage() {
               <Link
                 key={brand.slug}
                 href={`/${brand.slug}`}
-                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4"
+                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4 overflow-hidden"
               >
                 <Image
                   src={brand.logo}
                   alt={brand.name}
                   width={Math.round(120 * (brand.scale || 1))}
                   height={Math.round(48 * (brand.scale || 1))}
-                  className="object-contain max-h-12"
+                  className="object-contain max-h-12 pointer-events-none"
                   style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
                   unoptimized
                 />

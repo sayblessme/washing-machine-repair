@@ -131,29 +131,6 @@ export default async function BrandPage({ params }: BrandPageProps) {
         </div>
       </section>
 
-      {/* Works Section */}
-      <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Примеры ремонта {brand.name}
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="aspect-square relative bg-gray-200 rounded-lg overflow-hidden">
-                <Image
-                  src={`/placeholders/work-${num}.svg`}
-                  alt={`Ремонт ${brand.name} - пример ${num}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  unoptimized
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-12 sm:py-16 bg-blue-600 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">

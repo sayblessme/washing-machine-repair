@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Ремонт стиральных машин</h3>
+            <h3 className="text-white font-bold mb-4">Ремонт стиральных машин</h3>
             <p className="text-sm text-gray-400 mb-4">
               Частный мастер {siteConfig.masterName}. Ремонт стиральных машин на дому в {siteConfig.city}.
             </p>
@@ -29,7 +29,7 @@ export function Footer() {
 
           {/* Brands */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Ремонтируем бренды</h3>
+            <h3 className="text-white font-bold mb-4">Ремонтируем бренды</h3>
             <ul className="grid grid-cols-2 gap-2 text-sm">
               {[
                 { slug: "samsung", name: "Samsung" },
@@ -62,7 +62,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Контакты</h3>
+            <h3 className="text-white font-bold mb-4">Контакты</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a href={`tel:${siteConfig.phoneClean}`} className="hover:text-white transition-colors">

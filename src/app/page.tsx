@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/data/site";
-import { brands, getBrandsWithLogos } from "@/data/brands";
 import { reviewsData } from "@/data/reviews";
 import { LocalBusinessJsonLd } from "@/components/JsonLd";
 import { ReviewCard } from "@/components/ReviewCard";
 import { PricingSection } from "@/components/PricingSection";
 import { ConsultationForm } from "@/components/ConsultationForm";
+import { BrandsSection } from "@/components/BrandsSection";
 
 const basePath = "/washing-master";
 
@@ -199,149 +199,8 @@ export default function HomePage() {
       {/* Prices Section */}
       <PricingSection />
 
-      {/* Works Section */}
-      <section className="py-12 sm:py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-4">
-            Примеры выполненных работ
-          </h2>
-          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-600 mb-8">
-            <li>замена подшипников</li>
-            <li>устранение протечек</li>
-            <li>замена насосов</li>
-            <li>ремонт электронных модулей</li>
-          </ul>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[200px]">
-            {/* Большое фото слева */}
-            <div className="md:col-span-2 md:row-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-1.webp`}
-                alt="Пример работы 1"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 50vw"
-                unoptimized
-              />
-            </div>
-            {/* Маленькие справа сверху */}
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-2.webp`}
-                alt="Пример работы 2"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-3.webp`}
-                alt="Пример работы 3"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            {/* Маленькие справа снизу */}
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-4.webp`}
-                alt="Пример работы 4"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-5.webp`}
-                alt="Пример работы 5"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            {/* Нижний ряд */}
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-6.webp`}
-                alt="Пример работы 6"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            <div className="relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-7.webp`}
-                alt="Пример работы 7"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 25vw"
-                unoptimized
-              />
-            </div>
-            <div className="md:col-span-2 relative bg-gray-200 rounded-lg overflow-hidden">
-              <Image
-                src={`${basePath}/images/works/work-8.webp`}
-                alt="Пример работы 8"
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, 50vw"
-                unoptimized
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Brands Section */}
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
-            Ремонт стиральных машин любых марок
-          </h2>
-          {/* Основные бренды с логотипами */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-            {getBrandsWithLogos().map((brand) => (
-              <Link
-                key={brand.slug}
-                href={`/${brand.slug}`}
-                className="flex items-center justify-center h-20 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors border border-gray-100 hover:border-blue-200 p-4"
-              >
-                <Image
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={Math.round(120 * (brand.scale || 1))}
-                  height={Math.round(48 * (brand.scale || 1))}
-                  className="object-contain max-h-12"
-                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
-                  unoptimized
-                />
-              </Link>
-            ))}
-          </div>
-          {/* Бренды без логотипов текстовым списком */}
-          {brands.filter(b => !b.logo).length > 0 && (
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-              {brands.filter(b => !b.logo).sort((a, b) => a.name.localeCompare(b.name)).map((brand) => (
-                <Link
-                  key={brand.slug}
-                  href={`/${brand.slug}`}
-                  className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  {brand.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <BrandsSection />
 
       {/* Final CTA */}
       <section className="py-12 sm:py-16 bg-gray-900 text-white">

@@ -4,12 +4,12 @@
 // 1. Создайте бота через @BotFather и получите токен
 // 2. Пользователь @smaksimm должен написать боту /start
 // 3. Получите chat_id через: https://api.telegram.org/bot<TOKEN>/getUpdates
-// 4. Замените TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID ниже
+// 4. Добавьте NEXT_PUBLIC_TELEGRAM_BOT_TOKEN и NEXT_PUBLIC_TELEGRAM_CHAT_ID в .env.local
 //
 // Для группы: добавьте бота в группу, сделайте админом, получите chat_id
 
-const TELEGRAM_BOT_TOKEN = "8520003252:AAEQykAU4qpfjbiAPNZcUeIf5QTyO4PXX9Q";
-const TELEGRAM_CHAT_ID = "-5102972260";
+const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || "";
+const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || "";
 
 interface FormData {
   problem?: string;

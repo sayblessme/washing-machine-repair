@@ -1,13 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { brands } from "@/data/brands";
 import { siteConfig } from "@/data/site";
 
 export function Header() {
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Блокировка скролла при открытом мобильном меню
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
@@ -25,12 +37,12 @@ export function Header() {
               <circle cx="12" cy="12" r="4" strokeWidth="2" />
               <path strokeWidth="2" d="M12 2v4M12 18v4M2 12h4M18 12h4" />
             </svg>
-            <span className="hidden sm:inline">Ремонт стиральных машин</span>
+            <span className="hidden sm:inline font-bold">Ремонт стиральных машин</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-6">
-            <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
               Главная
             </Link>
 
@@ -40,10 +52,9 @@ export function Header() {
               onMouseEnter={() => setIsBrandsOpen(true)}
               onMouseLeave={() => setIsBrandsOpen(false)}
             >
-              <button
-                className="flex items-center gap-1 text-gray-600 hover:text-gray-900 transition-colors"
-                aria-expanded={isBrandsOpen}
-                aria-haspopup="true"
+              <Link
+                href="/brands"
+                className="flex items-center gap-1 text-gray-600 hover:text-gray-900 transition-colors font-medium"
               >
                 Бренды
                 <svg
@@ -54,7 +65,7 @@ export function Header() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </Link>
 
               {isBrandsOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
@@ -75,11 +86,11 @@ export function Header() {
               )}
             </div>
 
-            <Link href="/#prices" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/#prices" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
               Цены
             </Link>
 
-            <Link href="/#reviews" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/#reviews" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">
               Отзывы
             </Link>
           </nav>
@@ -121,51 +132,23 @@ export function Header() {
             <nav className="flex flex-col gap-2">
               <Link
                 href="/"
-                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg"
+                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Главная
               </Link>
 
-              <div className="px-4 py-2">
-                <div className="text-sm font-medium text-gray-500 mb-2">Бренды</div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                  {[
-                    { slug: "samsung", name: "Samsung" },
-                    { slug: "lg", name: "LG" },
-                    { slug: "bosch", name: "Bosch" },
-                    { slug: "siemens", name: "Siemens" },
-                    { slug: "electrolux", name: "Electrolux" },
-                    { slug: "indesit", name: "Indesit" },
-                    { slug: "ariston", name: "Ariston" },
-                    { slug: "beko", name: "Beko" },
-                    { slug: "whirlpool", name: "Whirlpool" },
-                    { slug: "candy", name: "Candy" },
-                    { slug: "zanussi", name: "Zanussi" },
-                    { slug: "haier", name: "Haier" },
-                  ].map((brand) => (
-                    <Link
-                      key={brand.slug}
-                      href={`/${brand.slug}`}
-                      className="py-1 text-gray-600 hover:text-gray-900"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {brand.name}
-                    </Link>
-                  ))}
-                </div>
-                <Link
-                  href="/brands"
-                  className="text-blue-600 hover:text-blue-700 mt-2 block text-sm"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Все 51 бренд →
-                </Link>
-              </div>
+              <Link
+                href="/brands"
+                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Бренды
+              </Link>
 
               <Link
                 href="/#prices"
-                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg"
+                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Цены
@@ -173,7 +156,7 @@ export function Header() {
 
               <Link
                 href="/#reviews"
-                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg"
+                className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Отзывы
